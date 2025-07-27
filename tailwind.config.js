@@ -68,6 +68,10 @@ module.exports = {
           dark: '#f8fafc',
           'dark-secondary': '#cbd5e1',
         },
+        
+        // Legacy aliases for compatibility
+        'primary': '#3b82f6',  // primary-500
+        'accent': '#06b6d4',   // accent-blue
       },
       
       // Modern font system

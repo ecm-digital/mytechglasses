@@ -98,7 +98,7 @@ export default function Home() {
       </section>
 
       {/* Products Section - Mobile Optimized */}
-      <section className="mobile-section md:section bg-background">
+      <section className="mobile-section md:section bg-neutral-50 dark:bg-neutral-900">
         <div className="mobile-container md:container">
           <h2 className="text-mobile-xl md:text-3xl lg:text-4xl font-bold font-heading text-center mb-6 md:mb-12">
             Nasze produkty
@@ -112,11 +112,11 @@ export default function Home() {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
                     <div className="text-3xl md:text-4xl mb-2">🥽</div>
-                    <span className="text-mobile-lg md:text-xl font-medium text-primary">Vision Pro</span>
+                    <span className="text-mobile-lg md:text-xl font-medium text-primary-600">Vision Pro</span>
                   </div>
                 </div>
                 {/* Premium badge */}
-                <div className="absolute top-3 right-3 bg-accent text-white px-2 py-1 rounded-full text-xs font-medium">
+                <div className="absolute top-3 right-3 bg-accent-blue text-white px-2 py-1 rounded-full text-xs font-medium">
                   Premium
                 </div>
               </div>
@@ -279,7 +279,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="section bg-background">
+      <section className="section bg-neutral-50 dark:bg-neutral-900">
         <div className="container">
           <h2 className="text-3xl md:text-4xl font-bold font-heading text-center mb-12">
             Co mówią nasi klienci
