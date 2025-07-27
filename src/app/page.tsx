@@ -57,9 +57,12 @@ export default function Home() {
               </Link>
               <Link 
                 href="/about" 
-                className="btn btn-ghost px-8 py-4 text-lg font-semibold glass hover-lift"
+                className="btn btn-ghost px-8 py-4 text-lg font-semibold glass hover-lift group"
               >
-                Dowiedz się więcej
+                <span>Dowiedz się więcej</span>
+                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
               </Link>
             </div>
             
