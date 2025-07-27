@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mytechglasses.vercel.app/sitemap.xml
