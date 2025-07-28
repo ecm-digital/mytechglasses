@@ -57,7 +57,7 @@ export default function Home() {
               </Link>
               <Link 
                 href="/about" 
-                className="btn btn-ghost px-8 py-4 text-lg font-semibold glass hover-lift group"
+                className="btn bg-gradient-to-r from-white/20 to-white/30 text-white hover:from-white hover:to-white hover:text-gray-900 px-8 py-4 text-lg font-semibold hover-lift group border border-white/30 backdrop-blur-sm"
               >
                 <span>Dowiedz się więcej</span>
                 <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
