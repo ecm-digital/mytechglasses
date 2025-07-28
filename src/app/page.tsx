@@ -44,8 +44,8 @@ export default function Home() {
               która zmienia sposób, w jaki widzisz rzeczywistość.
             </p>
             
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-slide-up" style={{ animationDelay: '400ms' }}>
+            {/* CTA Button */}
+            <div className="flex justify-center items-center mb-12 animate-slide-up" style={{ animationDelay: '400ms' }}>
               <Link 
                 href="/products" 
                 className="btn btn-gradient px-8 py-4 text-lg font-semibold hover-lift hover-glow group"
@@ -53,15 +53,6 @@ export default function Home() {
                 <span>Zobacz produkty</span>
                 <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </Link>
-              <Link 
-                href="/about" 
-                className="btn bg-gradient-to-r from-white/20 to-white/30 text-white hover:from-white hover:to-white hover:text-gray-900 px-8 py-4 text-lg font-semibold hover-lift group border border-white/30 backdrop-blur-sm"
-              >
-                <span>Dowiedz się więcej</span>
-                <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </Link>
             </div>
