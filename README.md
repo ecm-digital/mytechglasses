@@ -45,12 +45,20 @@ cd my-tech-glasses
 npm install
 ```
 
-3. **Uruchom serwer deweloperski:**
+3. **Skonfiguruj zmienne środowiskowe:**
+```bash
+cp .env.local.example .env.local
+```
+Edytuj `.env.local` i dodaj swoje klucze Stripe:
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` - klucz publiczny Stripe
+- `STRIPE_SECRET_KEY` - klucz prywatny Stripe
+
+4. **Uruchom serwer deweloperski:**
 ```bash
 npm run dev
 ```
 
-4. **Otwórz aplikację:**
+5. **Otwórz aplikację:**
 Przejdź do [http://localhost:3000](http://localhost:3000) w przeglądarce.
 
 ## 🏗️ Dostępne skrypty

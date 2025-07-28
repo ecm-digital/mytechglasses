@@ -6,22 +6,41 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:e2e": "jest tests/e2e",
+    "test:unit": "jest src/lib/__tests__",
+    "test:stripe": "node scripts/test-stripe-config.js",
+    "test:payment-flow": "jest tests/e2e/payment-flow.test.ts",
+    "test:stripe-cards": "jest tests/e2e/stripe-test-cards.test.ts",
+    "test:cart-persistence": "jest tests/e2e/cart-persistence.test.ts"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
+    "@stripe/stripe-js": "^7.6.1",
     "next": "^14.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
-    "@heroicons/react": "^2.0.18"
+    "stripe": "^18.3.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^14.1.2",
+    "@testing-library/user-event": "^14.5.1",
+    "@types/jest": "^29.5.8",
     "@types/node": "^20.8.9",
     "@types/react": "^18.2.33",
     "@types/react-dom": "^18.2.14",
     "autoprefixer": "^10.4.16",
+    "babel-jest": "^29.7.0",
+    "dotenv": "^17.2.1",
     "eslint": "^8.52.0",
     "eslint-config-next": "^14.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
     "typescript": "^5.2.2"

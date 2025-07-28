@@ -1,8 +1,50 @@
 'use client'
 
 import Link from 'next/link'
+import { useState } from 'react'
+import { useCart } from '@/hooks/useCart'
+import { ShoppingCartIcon, CheckIcon } from '@heroicons/react/24/outline'
 
 export default function Products() {
+  const { addItem, isLoading } = useCart()
+  const [addedItems, setAddedItems] = useState<Set<string>>(new Set())
+  const [loadingItems, setLoadingItems] = useState<Set<string>>(new Set())
+
+  const handleAddToCart = async (product: any) => {
+    setLoadingItems(prev => new Set(prev).add(product.id))
+    
+    try {
+      const success = await addItem({
+        productId: product.id,
+        name: product.name,
+        price: product.price,
+        quantity: 1,
+        color: 'Default', // Możesz dodać wybór koloru później
+        emoji: product.emoji
+      })
+      
+      if (success) {
+        setAddedItems(prev => new Set(prev).add(product.id))
+        // Usuń z listy dodanych po 2 sekundach
+        setTimeout(() => {
+          setAddedItems(prev => {
+            const newSet = new Set(prev)
+            newSet.delete(product.id)
+            return newSet
+          })
+        }, 2000)
+      }
+    } catch (error) {
+      console.error('Failed to add item to cart:', error)
+    } finally {
+      setLoadingItems(prev => {
+        const newSet = new Set(prev)
+        newSet.delete(product.id)
+        return newSet
+      })
+    }
+  }
+
   const products = [
     {
       id: 'vision-pro',
@@ -146,8 +188,27 @@ export default function Products() {
                   >
                     Zobacz szczegóły
                   </Link>
-                  <button className="btn btn-outline w-full sm:w-auto text-mobile-sm md:text-base">
-                    Dodaj do koszyka
+                  <button 
+                    onClick={() => handleAddToCart(product)}
+                    disabled={loadingItems.has(product.id)}
+                    className="btn btn-outline w-full sm:w-auto text-mobile-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  >
+                    {loadingItems.has(product.id) ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
+                        Dodawanie...
+                      </>
+                    ) : addedItems.has(product.id) ? (
+                      <>
+                        <CheckIcon className="h-4 w-4 mr-2" />
+                        Dodano!
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingCartIcon className="h-4 w-4 mr-2" />
+                        Dodaj do koszyka
+                      </>
+                    )}
                   </button>
                 </div>
               </div>

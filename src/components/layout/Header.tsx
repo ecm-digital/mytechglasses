@@ -3,11 +3,13 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon, SparklesIcon } from '@heroicons/react/24/outline'
+import { useCart } from '@/hooks/useCart'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-  const cartItemsCount = 0 // This would come from cart state
+  const { getItemCount } = useCart()
+  const cartItemsCount = getItemCount()
 
   // Handle scroll effect for glassmorphism
   useEffect(() => {
