@@ -215,12 +215,18 @@ export async function GET(
       shippingDetails: {
         method: getShippingMethodName(session.shipping_cost?.shipping_rate),
         estimatedDelivery: getEstimatedDelivery(session.shipping_cost?.shipping_rate),
-        address: (session as any).shipping_details?.address ? {
-          line1: (session as any).shipping_details.address.line1 || '',
-          city: (session as any).shipping_details.address.city || '',
-          postal_code: (session as any).shipping_details.address.postal_code || '',
-          country: (session as any).shipping_details.address.country || ''
-        } : undefined
+        address: (() => {
+          const sessionWithShipping = session as any
+          if (sessionWithShipping.shipping_details?.address) {
+            return {
+              line1: sessionWithShipping.shipping_details.address.line1 || '',
+              city: sessionWithShipping.shipping_details.address.city || '',
+              postal_code: sessionWithShipping.shipping_details.address.postal_code || '',
+              country: sessionWithShipping.shipping_details.address.country || ''
+            }
+          }
+          return undefined
+        })()
       },
       
       metadata: session.metadata || {},
