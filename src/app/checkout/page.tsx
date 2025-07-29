@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowLeftIcon, CreditCardIcon, TruckIcon, ShieldCheckIcon, ExclamationTriangleIcon } from '@heroicons/react/24/outline'
@@ -26,7 +26,7 @@ import {
   measurePerformance 
 } from '@/lib/error-logging'
 
-export default function Checkout() {
+function CheckoutContent() {
   // URL parameters for handling cancelled payments
   const searchParams = useSearchParams()
   const cancelled = searchParams.get('cancelled')
@@ -55,9 +55,21 @@ export default function Checkout() {
   })
 
   // Validation states
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({})
+  const [validationErrors, setValidationErrors] = useState<Record<string, string[]>>({})
   const [isFormValid, setIsFormValid] = useState(false)
   const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false)
+
+  // Helper function to get first error message
+  const getFirstError = (fieldName: string): string => {
+    const errors = validationErrors[fieldName]
+    return errors && errors.length > 0 ? errors[0] : ''
+  }
+
+  // Helper function to check if field has errors
+  const hasErrors = (fieldName: string): boolean => {
+    const errors = validationErrors[fieldName]
+    return errors && errors.length > 0
+  }
 
   // Loading and error states
   const [isLoading, setIsLoading] = useState(false)
@@ -68,14 +80,7 @@ export default function Checkout() {
   const validateForm = useCallback(() => {
     const validation = validateCheckoutForm(formData)
     
-    const fieldErrors: Record<string, string> = {}
-    Object.entries(validation.fieldErrors).forEach(([field, errors]) => {
-      if (errors.length > 0) {
-        fieldErrors[field] = errors[0]
-      }
-    })
-
-    setValidationErrors(fieldErrors)
+    setValidationErrors(validation.fieldErrors)
     setIsFormValid(validation.isValid)
 
     if (!validation.isValid && hasAttemptedSubmit) {
@@ -98,7 +103,7 @@ export default function Checkout() {
     
     setValidationErrors(prev => ({
       ...prev,
-      [fieldName]: errors.length > 0 ? errors[0] : ''
+      [fieldName]: errors
     }))
 
     return errors.length === 0
@@ -183,7 +188,7 @@ export default function Checkout() {
       }
     }))
 
-    if (hasAttemptedSubmit || validationErrors.phone) {
+    if (hasAttemptedSubmit || hasErrors('phone')) {
       setTimeout(() => validateField('phone', formatted, 'customer'), 300)
     }
   }
@@ -199,7 +204,7 @@ export default function Checkout() {
       }
     }))
 
-    if (hasAttemptedSubmit || validationErrors.postalCode) {
+    if (hasAttemptedSubmit || hasErrors('postalCode')) {
       setTimeout(() => validateField('postalCode', formatted, 'shipping'), 300)
     }
   }
@@ -283,9 +288,11 @@ export default function Checkout() {
       const { error: stripeError } = await stripe.redirectToCheckout({ sessionId })
       
       if (stripeError) {
-        logStripeError('Stripe redirect failed', stripeError, {
+        logStripeError('Stripe redirect failed', new Error(stripeError.message || 'Stripe redirect failed'), {
           sessionId,
-          customerEmail: formData.customerInfo.email
+          customerEmail: formData.customerInfo.email,
+          stripeErrorCode: stripeError.code,
+          stripeErrorType: stripeError.type
         })
         throw new Error(stripeError.message || 'Błąd podczas przekierowania do płatności')
       }
@@ -396,11 +403,11 @@ export default function Checkout() {
                       className={`input ${hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'firstName') ? 'border-red-500 focus:border-red-500' : ''}`}
                       placeholder="Wprowadź imię"
                       aria-invalid={hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'firstName')}
-                      aria-describedby={validationErrors.firstName ? 'firstName-error' : undefined}
+                      aria-describedby={hasErrors('firstName') ? 'firstName-error' : undefined}
                     />
-                    {validationErrors.firstName && (
+                    {hasErrors('firstName') && (
                       <p id="firstName-error" className="mt-1 text-sm text-red-600">
-                        {validationErrors.firstName}
+                        {getFirstError('firstName')}
                       </p>
                     )}
                   </div>
@@ -418,11 +425,11 @@ export default function Checkout() {
                       className={`input ${hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'lastName') ? 'border-red-500 focus:border-red-500' : ''}`}
                       placeholder="Wprowadź nazwisko"
                       aria-invalid={hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'lastName')}
-                      aria-describedby={validationErrors.lastName ? 'lastName-error' : undefined}
+                      aria-describedby={hasErrors('lastName') ? 'lastName-error' : undefined}
                     />
-                    {validationErrors.lastName && (
+                    {hasErrors('lastName') && (
                       <p id="lastName-error" className="mt-1 text-sm text-red-600">
-                        {validationErrors.lastName}
+                        {getFirstError('lastName')}
                       </p>
                     )}
                   </div>
@@ -440,11 +447,11 @@ export default function Checkout() {
                       className={`input ${hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'email') ? 'border-red-500 focus:border-red-500' : ''}`}
                       placeholder="twoj@email.com"
                       aria-invalid={hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'email')}
-                      aria-describedby={validationErrors.email ? 'email-error' : undefined}
+                      aria-describedby={hasErrors('email') ? 'email-error' : undefined}
                     />
-                    {validationErrors.email && (
+                    {hasErrors('email') && (
                       <p id="email-error" className="mt-1 text-sm text-red-600">
-                        {validationErrors.email}
+                        {getFirstError('email')}
                       </p>
                     )}
                   </div>
@@ -462,11 +469,11 @@ export default function Checkout() {
                       className={`input ${hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'phone') ? 'border-red-500 focus:border-red-500' : ''}`}
                       placeholder="+48 123 456 789"
                       aria-invalid={hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'phone')}
-                      aria-describedby={validationErrors.phone ? 'phone-error' : undefined}
+                      aria-describedby={hasErrors('phone') ? 'phone-error' : undefined}
                     />
-                    {validationErrors.phone && (
+                    {hasErrors('phone') && (
                       <p id="phone-error" className="mt-1 text-sm text-red-600">
-                        {validationErrors.phone}
+                        {getFirstError('phone')}
                       </p>
                     )}
                   </div>
@@ -494,11 +501,11 @@ export default function Checkout() {
                       className={`input ${hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'address') ? 'border-red-500 focus:border-red-500' : ''}`}
                       placeholder="ul. Przykładowa 123"
                       aria-invalid={hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'address')}
-                      aria-describedby={validationErrors.address ? 'address-error' : undefined}
+                      aria-describedby={hasErrors('address') ? 'address-error' : undefined}
                     />
-                    {validationErrors.address && (
+                    {hasErrors('address') && (
                       <p id="address-error" className="mt-1 text-sm text-red-600">
-                        {validationErrors.address}
+                        {getFirstError('address')}
                       </p>
                     )}
                   </div>
@@ -517,11 +524,11 @@ export default function Checkout() {
                         className={`input ${hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'city') ? 'border-red-500 focus:border-red-500' : ''}`}
                         placeholder="Warszawa"
                         aria-invalid={hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'city')}
-                        aria-describedby={validationErrors.city ? 'city-error' : undefined}
+                        aria-describedby={hasErrors('city') ? 'city-error' : undefined}
                       />
-                      {validationErrors.city && (
+                      {hasErrors('city') && (
                         <p id="city-error" className="mt-1 text-sm text-red-600">
-                          {validationErrors.city}
+                          {getFirstError('city')}
                         </p>
                       )}
                     </div>
@@ -539,11 +546,11 @@ export default function Checkout() {
                         className={`input ${hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'postalCode') ? 'border-red-500 focus:border-red-500' : ''}`}
                         placeholder="00-001"
                         aria-invalid={hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'postalCode')}
-                        aria-describedby={validationErrors.postalCode ? 'postalCode-error' : undefined}
+                        aria-describedby={hasErrors('postalCode') ? 'postalCode-error' : undefined}
                       />
-                      {validationErrors.postalCode && (
+                      {hasErrors('postalCode') && (
                         <p id="postalCode-error" className="mt-1 text-sm text-red-600">
-                          {validationErrors.postalCode}
+                          {getFirstError('postalCode')}
                         </p>
                       )}
                     </div>
@@ -558,16 +565,16 @@ export default function Checkout() {
                         onChange={handleInputChange}
                         className={`input ${hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'country') ? 'border-red-500 focus:border-red-500' : ''}`}
                         aria-invalid={hasFieldError({ fieldErrors: validationErrors, errors: [], isValid: true }, 'country')}
-                        aria-describedby={validationErrors.country ? 'country-error' : undefined}
+                        aria-describedby={hasErrors('country') ? 'country-error' : undefined}
                       >
                         <option value="Polska">Polska</option>
                         <option value="Niemcy">Niemcy</option>
                         <option value="Czechy">Czechy</option>
                         <option value="Słowacja">Słowacja</option>
                       </select>
-                      {validationErrors.country && (
+                      {hasErrors('country') && (
                         <p id="country-error" className="mt-1 text-sm text-red-600">
-                          {validationErrors.country}
+                          {getFirstError('country')}
                         </p>
                       )}
                     </div>
@@ -822,5 +829,20 @@ export default function Checkout() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function Checkout() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Ładowanie formularza...</p>
+        </div>
+      </div>
+    }>
+      <CheckoutContent />
+    </Suspense>
   )
 }

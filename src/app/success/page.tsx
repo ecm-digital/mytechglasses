@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { CheckCircleIcon, TruckIcon, EnvelopeIcon, ExclamationTriangleIcon, ArrowPathIcon } from '@heroicons/react/24/solid'
@@ -46,7 +46,7 @@ interface OrderDetails {
   createdAt: string
 }
 
-export default function Success() {
+function SuccessContent() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
   const orderId = searchParams.get('order_id')
@@ -389,5 +389,20 @@ export default function Success() {
         </div>
       </div>
     </div>
+  )
+}
+export
+ default function Success() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center">
+          <ArrowPathIcon className="w-8 h-8 text-blue-500 animate-spin mx-auto mb-4" />
+          <p className="text-gray-600">Ładowanie szczegółów zamówienia...</p>
+        </div>
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   )
 }

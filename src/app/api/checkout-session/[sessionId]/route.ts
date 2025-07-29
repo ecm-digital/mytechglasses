@@ -215,11 +215,11 @@ export async function GET(
       shippingDetails: {
         method: getShippingMethodName(session.shipping_cost?.shipping_rate),
         estimatedDelivery: getEstimatedDelivery(session.shipping_cost?.shipping_rate),
-        address: session.shipping_details?.address ? {
-          line1: session.shipping_details.address.line1 || '',
-          city: session.shipping_details.address.city || '',
-          postal_code: session.shipping_details.address.postal_code || '',
-          country: session.shipping_details.address.country || ''
+        address: (session as any).shipping_details?.address ? {
+          line1: (session as any).shipping_details.address.line1 || '',
+          city: (session as any).shipping_details.address.city || '',
+          postal_code: (session as any).shipping_details.address.postal_code || '',
+          country: (session as any).shipping_details.address.country || ''
         } : undefined
       },
       

@@ -24,7 +24,7 @@ import {
 // TYPES
 // ============================================================================
 
-interface UseCartReturn {
+export interface UseCartReturn {
   // State
   items: CartItem[]
   summary: CartSummary

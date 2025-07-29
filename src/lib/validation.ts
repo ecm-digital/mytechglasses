@@ -220,7 +220,7 @@ const validateField = (value: any, rules: ValidationRule['rules'], context?: any
         break
 
       case 'custom':
-        if (rule.validator && !rule.validator(value, context)) {
+        if (rule.validator && !rule.validator(value)) {
           errors.push(rule.message)
         }
         break

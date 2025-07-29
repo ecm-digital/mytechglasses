@@ -219,9 +219,12 @@ export async function POST(request: NextRequest) {
     // Add server-side context
     errorReport.context = {
       ...errorReport.context,
-      serverTimestamp: new Date().toISOString(),
-      clientIP,
-      userAgent: request.headers.get('user-agent') || undefined
+      userAgent: request.headers.get('user-agent') || undefined,
+      additionalData: {
+        ...errorReport.context.additionalData,
+        serverTimestamp: new Date().toISOString(),
+        clientIP
+      }
     }
 
     // Process the error

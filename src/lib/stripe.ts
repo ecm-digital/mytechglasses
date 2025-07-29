@@ -62,7 +62,7 @@ export const getStripeServer = (): StripeServer => {
     }
 
     stripeServer = new StripeServer(secretKey, {
-      apiVersion: '2024-06-20',
+      apiVersion: '2025-06-30.basil',
       typescript: true,
     })
   }
@@ -79,7 +79,7 @@ export const getStripeConfig = () => {
     secretKey: secretKey ? '***' + secretKey.slice(-4) : undefined, // Masked for logging
     isTestMode,
     environment: process.env.NODE_ENV,
-    apiVersion: '2024-06-20' as const
+    apiVersion: '2025-06-30.basil' as const
   }
 }
 

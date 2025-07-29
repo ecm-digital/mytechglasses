@@ -328,11 +328,11 @@ export const config = {
 export function cleanupRateLimitMap(): void {
   const now = Date.now()
   
-  for (const [key, entry] of rateLimitMap.entries()) {
+  rateLimitMap.forEach((entry, key) => {
     if (now > entry.resetTime) {
       rateLimitMap.delete(key)
     }
-  }
+  })
 }
 
 // Cleanup every 5 minutes

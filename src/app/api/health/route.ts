@@ -67,13 +67,13 @@ export async function GET() {
       service: 'stripe',
       status: stripeStatus,
       responseTime: stripeResponseTime,
-      error: stripeError
+      error: stripeError || undefined
     })
     
     recordHealth({
       service: 'storage',
       status: storageStatus,
-      error: storageError
+      error: storageError || undefined
     })
     
     recordHealth({
