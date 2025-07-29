@@ -118,6 +118,24 @@ const getEstimatedDelivery = (shippingRate: any): string => {
   return `${min}-${max} dni roboczych`
 }
 
+const getShippingAddress = (session: any) => {
+  try {
+    const sessionData = session as any
+    if (sessionData && sessionData.shipping_details && sessionData.shipping_details.address) {
+      const address = sessionData.shipping_details.address
+      return {
+        line1: address.line1 || '',
+        city: address.city || '',
+        postal_code: address.postal_code || '',
+        country: address.country || ''
+      }
+    }
+  } catch (error) {
+    // Ignore shipping address errors - not critical
+  }
+  return undefined
+}
+
 // ============================================================================
 // MAIN API HANDLER
 // ============================================================================
@@ -215,18 +233,7 @@ export async function GET(
       shippingDetails: {
         method: getShippingMethodName(session.shipping_cost?.shipping_rate),
         estimatedDelivery: getEstimatedDelivery(session.shipping_cost?.shipping_rate),
-        address: (() => {
-          const sessionWithShipping = session as any
-          if (sessionWithShipping.shipping_details?.address) {
-            return {
-              line1: sessionWithShipping.shipping_details.address.line1 || '',
-              city: sessionWithShipping.shipping_details.address.city || '',
-              postal_code: sessionWithShipping.shipping_details.address.postal_code || '',
-              country: sessionWithShipping.shipping_details.address.country || ''
-            }
-          }
-          return undefined
-        })()
+        address: getShippingAddress(session)
       },
       
       metadata: session.metadata || {},
