@@ -47,7 +47,7 @@ const Header = () => {
               className={`
                 md:hidden relative group
                 w-12 h-12 rounded-xl flex items-center justify-center
-                transition-all duration-300 touch-feedback
+                menu-button-enhanced ripple-effect
                 ${isScrolled 
                   ? 'bg-white/20 hover:bg-white/30 text-neutral-700 dark:text-neutral-300' 
                   : 'bg-white/10 hover:bg-white/20 text-white'
@@ -127,7 +127,7 @@ const Header = () => {
                 href="/cart" 
                 className={`
                   relative group w-12 h-12 rounded-xl flex items-center justify-center
-                  transition-all duration-300 touch-feedback
+                  menu-button-enhanced ripple-effect
                   ${isScrolled 
                     ? 'bg-white/20 hover:bg-white/30 text-neutral-700 dark:text-neutral-300' 
                     : 'bg-white/10 hover:bg-white/20 text-white'
@@ -149,7 +149,7 @@ const Header = () => {
                 href="/account" 
                 className={`
                   hidden md:flex relative group w-12 h-12 rounded-xl items-center justify-center
-                  transition-all duration-300 touch-feedback
+                  menu-button-enhanced ripple-effect
                   ${isScrolled 
                     ? 'bg-white/20 hover:bg-white/30 text-neutral-700 dark:text-neutral-300' 
                     : 'bg-white/10 hover:bg-white/20 text-white'
@@ -167,26 +167,32 @@ const Header = () => {
       </header>
 
       {/* Modern Mobile Menu with Glassmorphism */}
-      <div className={`
-        fixed inset-0 z-40 md:hidden transition-all duration-500 ease-out
-        ${isMenuOpen ? 'visible opacity-100' : 'invisible opacity-0'}
-      `}>
+      <div 
+        className={`
+          fixed inset-0 z-40 md:hidden transition-all duration-500 ease-out
+          ${isMenuOpen ? 'visible opacity-100' : 'invisible opacity-0'}
+        `}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="mobile-menu-title"
+        aria-hidden={!isMenuOpen}
+      >
         {/* Menu Panel */}
         <div className={`
           absolute left-0 top-0 h-full w-80 max-w-[85vw]
-          glass-dark backdrop-blur-2xl
+          glass-dark-enhanced
           transform transition-transform duration-500 ease-out
           ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}
         `}>
           {/* Menu Header */}
           <div className="flex items-center justify-between p-6 border-b border-white/10">
             <div className="flex items-center space-x-3">
-              <SparklesIcon className="w-8 h-8 text-primary-400" />
-              <span className="text-white font-heading font-bold text-lg">Menu</span>
+              <SparklesIcon className="w-8 h-8 text-blue-400" aria-hidden="true" />
+              <span id="mobile-menu-title" className="menu-header-text font-heading">Menu</span>
             </div>
             <button
               onClick={closeMenu}
-              className="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-all duration-200 touch-feedback"
+              className="w-12 h-12 rounded-xl bg-white/20 hover:bg-white/30 flex items-center justify-center menu-text-enhanced menu-button-enhanced ripple-effect"
               aria-label="Close menu"
             >
               <XMarkIcon className="w-6 h-6" />
@@ -194,7 +200,7 @@ const Header = () => {
           </div>
 
           {/* Menu Items */}
-          <nav className="flex-1 py-6 px-2">
+          <nav className="flex-1 py-8 px-2" role="navigation" aria-label="Main navigation">
             {[
               { href: '/', label: 'Strona główna', icon: '🏠' },
               { href: '/products', label: 'Produkty', icon: '🥽' },
@@ -204,32 +210,35 @@ const Header = () => {
               <Link
                 key={item.href}
                 href={item.href}
-                className="mobile-nav-item text-white hover:bg-white/10 hover:border-primary-400 animate-slide-right"
+                className="mobile-nav-item animate-slide-right"
                 style={{ animationDelay: `${index * 100}ms` }}
                 onClick={closeMenu}
+                role="menuitem"
+                aria-label={`Navigate to ${item.label}`}
               >
-                <span className="text-xl mr-3">{item.icon}</span>
-                {item.label}
+                <span className="text-2xl mr-4 flex-shrink-0" aria-hidden="true">{item.icon}</span>
+                <span className="menu-item-text">{item.label}</span>
               </Link>
             ))}
             
-            <div className="border-t border-white/10 mt-6 pt-6">
+            <div className="border-t border-white/20 mt-8 pt-6">
               <Link
                 href="/account"
-                className="mobile-nav-item text-white hover:bg-white/10 hover:border-primary-400"
+                className="mobile-nav-item"
                 onClick={closeMenu}
               >
-                <span className="text-xl mr-3">👤</span>
-                Moje konto
+                <span className="text-2xl mr-4 flex-shrink-0">👤</span>
+                <span className="menu-item-text">Moje konto</span>
               </Link>
               <Link
                 href="/cart"
-                className="mobile-nav-item text-white hover:bg-white/10 hover:border-primary-400"
+                className="mobile-nav-item"
                 onClick={closeMenu}
               >
-                <span className="text-xl mr-3">🛒</span>
-                Koszyk {cartItemsCount > 0 && (
-                  <span className="ml-2 bg-primary-500 text-white text-xs px-2 py-1 rounded-full">
+                <span className="text-2xl mr-4 flex-shrink-0">🛒</span>
+                <span className="menu-item-text flex-1">Koszyk</span>
+                {cartItemsCount > 0 && (
+                  <span className="ml-3 bg-primary-500 text-white text-sm px-3 py-1 rounded-full font-bold min-w-[24px] text-center">
                     {cartItemsCount}
                   </span>
                 )}
@@ -238,10 +247,10 @@ const Header = () => {
           </nav>
 
           {/* Menu Footer */}
-          <div className="p-6 border-t border-white/10">
+          <div className="p-6 border-t border-white/20">
             <div className="text-center">
-              <p className="text-white/80 text-sm font-medium">My Tech Glasses</p>
-              <p className="text-white/60 text-xs mt-1">Przyszłość na wyciągnięcie ręki</p>
+              <p className="menu-footer-text">My Tech Glasses</p>
+              <p className="menu-footer-subtitle mt-1">Przyszłość na wyciągnięcie ręki</p>
             </div>
           </div>
         </div>
@@ -249,7 +258,7 @@ const Header = () => {
         {/* Backdrop */}
         <div 
           className={`
-            absolute inset-0 bg-black/50 backdrop-blur-sm
+            absolute inset-0 menu-backdrop-enhanced
             transition-opacity duration-500
             ${isMenuOpen ? 'opacity-100' : 'opacity-0'}
           `}
