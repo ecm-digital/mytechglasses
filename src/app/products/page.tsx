@@ -6,7 +6,7 @@ import { useCart } from '@/hooks/useCart'
 import { ShoppingCartIcon, CheckIcon } from '@heroicons/react/24/outline'
 
 export default function Products() {
-  const { addItem, isLoading } = useCart()
+  const { addItem } = useCart()
   const [addedItems, setAddedItems] = useState<Set<string>>(new Set())
   const [loadingItems, setLoadingItems] = useState<Set<string>>(new Set())
 
@@ -48,194 +48,281 @@ export default function Products() {
   const products = [
     {
       id: 'vision-pro',
-      name: 'Vision Pro',
-      description: 'Flagowy model z zaawansowanymi funkcjami rozszerzonej rzeczywistości i najwyższą jakością obrazu.',
-      shortDescription: 'Flagowy model z zaawansowanymi funkcjami AR',
-      price: 2499,
-      badge: 'Premium',
-      badgeColor: 'bg-accent',
+      name: 'AI Smart Glasses Pro',
+      description: 'Inteligentne okulary z kamerą HD 1200P, asystentem AI ChatGPT i Deep Seek, oraz otwartymi słuchawkami. Idealne do vlogowania, podróży i codziennego użytku bez użycia rąk.',
+      shortDescription: 'Inteligentne okulary z AI i kamerą 1200P',
+      price: 599,
+      badge: 'Bestseller',
+      badgeColor: 'bg-blue-500',
       emoji: '🥽',
-      gradient: 'from-gray-100 to-gray-200',
+      gradient: 'from-blue-100 via-purple-100 to-pink-100',
       features: [
-        'Wyświetlacz 4K z HDR',
-        'Pole widzenia 120°',
-        'Zaawansowane śledzenie ruchu',
-        'Rozpoznawanie gestów',
-        'Bateria do 8 godzin',
-        'Wbudowane głośniki przestrzenne',
-        'Asystent głosowy AI'
-      ]
-    },
-    {
-      id: 'tech-view',
-      name: 'Tech View',
-      description: 'Idealny balans między funkcjonalnością a ceną. Doskonały dla codziennego użytku.',
-      shortDescription: 'Idealny balans funkcjonalności i ceny',
-      price: 1899,
-      badge: 'Popularne',
-      badgeColor: 'bg-success',
-      emoji: '👓',
-      gradient: 'from-blue-100 to-blue-200',
-      features: [
-        'Wyświetlacz Full HD',
-        'Pole widzenia 100°',
-        'Podstawowe śledzenie ruchu',
-        'Sterowanie dotykiem i głosem',
-        'Bateria do 10 godzin',
-        'Wbudowane głośniki stereo',
-        'Kompatybilność z popularnymi aplikacjami'
-      ]
-    },
-    {
-      id: 'lite',
-      name: 'Lite',
-      description: 'Lekki i przystępny cenowo model dla osób rozpoczynających przygodę z inteligentnymi okularami.',
-      shortDescription: 'Lekki model dla początkujących',
-      price: 1299,
-      badge: 'Najlepsza cena',
-      badgeColor: 'bg-warning',
-      emoji: '🕶️',
-      gradient: 'from-green-100 to-green-200',
-      features: [
-        'Wyświetlacz HD',
-        'Pole widzenia 90°',
-        'Podstawowe funkcje AR',
-        'Sterowanie przez aplikację mobilną',
-        'Bateria do 12 godzin',
-        'Lekka konstrukcja (tylko 45g)',
-        'Idealne do codziennego użytku'
+        'Kamera HD 1200P z technologią AI (800W)',
+        'Stabilizacja obrazu przeciwwstrząsowa',
+        'Redukcja szumów i HDR dla lepszych zdjęć',
+        'Asystent AI ChatGPT i Deep Seek',
+        'Szybka identyfikacja obiektów AI',
+        'Tłumaczenie tekstów w czasie rzeczywistym',
+        'Otwarte słuchawki z dźwiękiem przestrzennym',
+        'Podwójne mikrofony z redukcją szumów ENC',
+        'Sterowanie głosowe i dotykowe',
+        'Bateria 270 mAh - 7h odtwarzania',
+        'Wi-Fi i Bluetooth 5.4',
+        'Automatyczna synchronizacja zdjęć i wideo',
+        'Ładowanie w 150 minut'
       ]
     }
   ]
 
   return (
-    <div className="mobile-container md:container py-6 md:py-12">
-      {/* Mobile-optimized header */}
-      <div className="mb-6 md:mb-8">
-        <h1 className="text-mobile-xl md:text-3xl lg:text-4xl font-bold font-heading mb-2">
-          Nasze produkty
-        </h1>
-        <p className="text-mobile-sm md:text-base text-gray-600">
-          Wybierz idealne okulary dla siebie z naszej kolekcji
-        </p>
-      </div>
-      
-      {/* Mobile-first single column layout */}
-      <div className="space-y-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:space-y-0">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 dark:from-neutral-900 dark:via-blue-950 dark:to-neutral-900">
+      <div className="container py-12 md:py-20">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-heading mb-4">
+            AI Smart Glasses Pro
+          </h1>
+          <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+            Inteligentne okulary z kamerą 1200P, asystentem AI i otwartymi słuchawkami. Twój osobisty asystent zawsze pod ręką.
+          </p>
+        </div>
+        
+        {/* Main Product Card */}
         {products.map((product) => (
-          <div key={product.id} className="mobile-card md:card group touch-feedback">
-            {/* Mobile-optimized product image */}
-            <div className={`relative h-48 md:h-64 bg-gradient-to-br ${product.gradient}`}>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-4xl md:text-5xl mb-2">{product.emoji}</div>
-                  <span className="text-mobile-lg md:text-xl font-medium text-primary">
-                    {product.name}
-                  </span>
-                </div>
-              </div>
-              
-              {/* Product badge */}
-              <div className={`absolute top-3 right-3 ${product.badgeColor} text-white px-2 py-1 rounded-full text-xs font-medium`}>
-                {product.badge}
-              </div>
-            </div>
-            
-            {/* Mobile-optimized content */}
-            <div className="p-4 md:p-6">
-              <h3 className="text-mobile-lg md:text-xl font-bold mb-2">{product.name}</h3>
-              
-              {/* Mobile description - shorter for better UX */}
-              <p className="text-gray-600 text-mobile-sm md:text-base mb-4 md:hidden">
-                {product.shortDescription}
-              </p>
-              <p className="text-gray-600 text-base mb-4 hidden md:block">
-                {product.description}
-              </p>
-              
-              {/* Key features - mobile optimized */}
-              <ul className="mb-4 space-y-1">
-                {product.features.slice(0, 3).map((feature, index) => (
-                  <li key={index} className="flex items-center text-mobile-xs md:text-sm text-gray-600">
-                    <svg className="h-3 w-3 md:h-4 md:w-4 mr-2 text-accent flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                    </svg>
-                    {feature}
-                  </li>
-                ))}
-                {product.features.length > 3 && (
-                  <li className="text-mobile-xs md:text-sm text-gray-500 ml-5">
-                    +{product.features.length - 3} więcej funkcji
-                  </li>
-                )}
-              </ul>
-              
-              {/* Mobile-optimized price and CTA */}
-              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                <div className="flex items-center justify-between sm:block">
-                  <span className="text-mobile-lg md:text-lg font-bold text-primary">
-                    {product.price} zł
-                  </span>
-                  <span className="text-mobile-xs md:text-sm text-gray-500 sm:hidden">
-                    Darmowa dostawa
-                  </span>
+          <div key={product.id} className="max-w-6xl mx-auto mb-12">
+            <div className="card overflow-hidden">
+              <div className="grid md:grid-cols-2 gap-0">
+                {/* Product Image */}
+                <div className={`relative bg-gradient-to-br ${product.gradient} p-12 md:p-16 flex items-center justify-center`}>
+                  <div className="text-center">
+                    <div className="text-9xl md:text-[12rem] mb-4 animate-float">{product.emoji}</div>
+                    <div className={`inline-block ${product.badgeColor} text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg`}>
+                      {product.badge}
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <Link 
-                    href={`/products/${product.id}`} 
-                    className="btn btn-primary w-full sm:w-auto text-mobile-sm md:text-base"
-                  >
-                    Zobacz szczegóły
-                  </Link>
-                  <button 
-                    onClick={() => handleAddToCart(product)}
-                    disabled={loadingItems.has(product.id)}
-                    className="btn btn-outline w-full sm:w-auto text-mobile-sm md:text-base disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
-                  >
-                    {loadingItems.has(product.id) ? (
-                      <>
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current mr-2"></div>
-                        Dodawanie...
-                      </>
-                    ) : addedItems.has(product.id) ? (
-                      <>
-                        <CheckIcon className="h-4 w-4 mr-2" />
-                        Dodano!
-                      </>
-                    ) : (
-                      <>
-                        <ShoppingCartIcon className="h-4 w-4 mr-2" />
-                        Dodaj do koszyka
-                      </>
-                    )}
-                  </button>
+                {/* Product Details */}
+                <div className="p-8 md:p-12 flex flex-col justify-center">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">{product.name}</h2>
+                  <p className="text-gray-600 dark:text-gray-400 text-lg mb-8">
+                    {product.description}
+                  </p>
+                  
+                  {/* Features Grid */}
+                  <div className="grid grid-cols-1 gap-3 mb-8">
+                    {product.features.map((feature, index) => (
+                      <div key={index} className="flex items-center text-gray-700 dark:text-gray-300">
+                        <svg className="w-6 h-6 mr-3 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  {/* Price */}
+                  <div className="mb-8 pb-8 border-b border-gray-200 dark:border-gray-700">
+                    <div className="flex items-baseline gap-2 mb-2">
+                      <span className="text-5xl font-bold text-blue-600">{product.price} zł</span>
+                    </div>
+                    <p className="text-sm text-gray-500">Darmowa dostawa • 30 dni na zwrot</p>
+                  </div>
+                  
+                  {/* CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Link 
+                      href={`/products/${product.id}`} 
+                      className="btn btn-primary text-lg py-4 flex-1 group"
+                    >
+                      <span>Zobacz szczegóły</span>
+                      <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </Link>
+                    <button 
+                      onClick={() => handleAddToCart(product)}
+                      disabled={loadingItems.has(product.id)}
+                      className="btn btn-outline text-lg py-4 flex-1 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                    >
+                      {loadingItems.has(product.id) ? (
+                        <>
+                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-current mr-2"></div>
+                          Dodawanie...
+                        </>
+                      ) : addedItems.has(product.id) ? (
+                        <>
+                          <CheckIcon className="h-5 w-5 mr-2" />
+                          Dodano do koszyka!
+                        </>
+                      ) : (
+                        <>
+                          <ShoppingCartIcon className="h-5 w-5 mr-2" />
+                          Dodaj do koszyka
+                        </>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         ))}
-      </div>
 
-      {/* Mobile-friendly additional info */}
-      <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-        <h3 className="text-mobile-base md:text-lg font-bold mb-2">Dlaczego My Tech Glasses?</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <div>
-            <div className="text-2xl mb-1">🚚</div>
-            <p className="text-mobile-xs md:text-sm text-gray-600">Darmowa dostawa</p>
+        {/* Detailed Features Section */}
+        <div className="max-w-6xl mx-auto mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Szczegółowe funkcje</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Feature Card 1 */}
+            <div className="card p-8 hover-lift">
+              <div className="flex items-start gap-4">
+                <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl w-16 h-16 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Kamera HD 1200P z AI</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-3">
+                    Profesjonalna kamera o mocy 800W z rozdzielczością 1200P, technologią przeciwwstrząsową i HDR.
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
+                      Redukcja szumów wielu ramek
+                    </li>
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
+                      Piękne efekty tła
+                    </li>
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
+                      Idealne do vlogowania i podróży
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature Card 2 */}
+            <div className="card p-8 hover-lift">
+              <div className="flex items-start gap-4">
+                <div className="bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl w-16 h-16 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Asystent AI</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-3">
+                    Zintegrowany ChatGPT i Deep Seek dla inteligentnych odpowiedzi bez wyciągania telefonu.
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-purple-500 rounded-full mr-2"></span>
+                      Identyfikacja obiektów jednym kliknięciem
+                    </li>
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-purple-500 rounded-full mr-2"></span>
+                      Tłumaczenie tekstów w czasie rzeczywistym
+                    </li>
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-purple-500 rounded-full mr-2"></span>
+                      Natychmiastowe odpowiedzi głosowe
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature Card 3 */}
+            <div className="card p-8 hover-lift">
+              <div className="flex items-start gap-4">
+                <div className="bg-gradient-to-br from-pink-500 to-orange-600 rounded-xl w-16 h-16 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Otwarte słuchawki</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-3">
+                    Wysokiej jakości dźwięk z otwartym designem - słuchaj muzyki zachowując świadomość otoczenia.
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-pink-500 rounded-full mr-2"></span>
+                      Podwójne mikrofony z ENC
+                    </li>
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-pink-500 rounded-full mr-2"></span>
+                      Doskonała klarowność rozmów
+                    </li>
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-pink-500 rounded-full mr-2"></span>
+                      Bezpieczne podczas jazdy i wędrówek
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Feature Card 4 */}
+            <div className="card p-8 hover-lift">
+              <div className="flex items-start gap-4">
+                <div className="bg-gradient-to-br from-green-500 to-teal-600 rounded-xl w-16 h-16 flex items-center justify-center flex-shrink-0">
+                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Długi czas pracy</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-3">
+                    Bateria 270 mAh zapewnia pełny dzień użytkowania z automatyczną synchronizacją.
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></span>
+                      7h odtwarzania muzyki
+                    </li>
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></span>
+                      2h nagrywania wideo
+                    </li>
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></span>
+                      Ładowanie w 150 minut
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <div className="text-2xl mb-1">🔒</div>
-            <p className="text-mobile-xs md:text-sm text-gray-600">Bezpieczne płatności</p>
-          </div>
-          <div>
-            <div className="text-2xl mb-1">↩️</div>
-            <p className="text-mobile-xs md:text-sm text-gray-600">30 dni na zwrot</p>
-          </div>
-          <div>
-            <div className="text-2xl mb-1">🛠️</div>
-            <p className="text-mobile-xs md:text-sm text-gray-600">Wsparcie 24/7</p>
+        </div>
+
+        {/* Benefits Section */}
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="card p-6 text-center hover-lift">
+              <div className="text-4xl mb-3">🚚</div>
+              <h3 className="font-bold mb-2">Darmowa dostawa</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Na terenie całej Polski</p>
+            </div>
+            <div className="card p-6 text-center hover-lift">
+              <div className="text-4xl mb-3">🔒</div>
+              <h3 className="font-bold mb-2">Bezpieczne płatności</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Szyfrowane transakcje</p>
+            </div>
+            <div className="card p-6 text-center hover-lift">
+              <div className="text-4xl mb-3">↩️</div>
+              <h3 className="font-bold mb-2">30 dni na zwrot</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Bez podania przyczyny</p>
+            </div>
+            <div className="card p-6 text-center hover-lift">
+              <div className="text-4xl mb-3">🛠️</div>
+              <h3 className="font-bold mb-2">Wsparcie 24/7</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400">Zawsze do dyspozycji</p>
+            </div>
           </div>
         </div>
       </div>

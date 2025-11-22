@@ -57,28 +57,60 @@ export default function Home() {
               </Link>
             </div>
             
-            {/* Product Preview Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto animate-slide-up" style={{ animationDelay: '600ms' }}>
-              {[
-                { name: 'Vision Pro', emoji: '🥽', price: '2499 zł', badge: 'Premium' },
-                { name: 'Tech View', emoji: '👓', price: '1899 zł', badge: 'Popularne' },
-                { name: 'Lite', emoji: '🕶️', price: '1299 zł', badge: 'Najlepsza cena' }
-              ].map((product, index) => (
-                <div 
-                  key={product.name}
-                  className="card-glass p-6 hover-lift group cursor-pointer"
-                  style={{ animationDelay: `${800 + index * 100}ms` }}
-                >
-                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
-                    {product.emoji}
+            {/* Product Showcase - AI Smart Glasses */}
+            <div className="max-w-2xl mx-auto animate-slide-up" style={{ animationDelay: '600ms' }}>
+              <div className="card-glass p-8 hover-lift group cursor-pointer">
+                <div className="text-center">
+                  <div className="text-7xl mb-4 group-hover:scale-110 transition-transform">
+                    🥽
                   </div>
-                  <h3 className="font-heading font-bold text-lg mb-2">{product.name}</h3>
-                  <p className="text-accent-blue font-semibold mb-2">{product.price}</p>
-                  <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-medium">
-                    {product.badge}
-                  </span>
+                  <h3 className="font-heading font-bold text-3xl mb-3">AI Smart Glasses Pro</h3>
+                  <p className="text-white/80 text-lg mb-4">
+                    Inteligentne okulary z kamerą 1200P i asystentem AI
+                  </p>
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <span className="text-accent-blue font-bold text-2xl">599 zł</span>
+                    <span className="inline-block px-4 py-2 bg-accent-blue/20 rounded-full text-sm font-medium">
+                      Bestseller
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 text-sm text-white/70 mb-6">
+                    <div className="flex items-center justify-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Kamera 1200P HD
+                    </div>
+                    <div className="flex items-center justify-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      ChatGPT & Deep Seek
+                    </div>
+                    <div className="flex items-center justify-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Bateria 7h
+                    </div>
+                    <div className="flex items-center justify-center">
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Bluetooth 5.4
+                    </div>
+                  </div>
+                  <Link 
+                    href="/products/vision-pro" 
+                    className="inline-flex items-center px-6 py-3 bg-white text-primary-800 rounded-xl font-semibold hover:bg-white/90 transition-all hover:scale-105"
+                  >
+                    Zobacz szczegóły
+                    <svg className="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
           
@@ -91,181 +123,177 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Products Section - Mobile Optimized */}
-      <section className="mobile-section md:section bg-neutral-50 dark:bg-neutral-900">
-        <div className="mobile-container md:container">
-          <h2 className="text-mobile-xl md:text-3xl lg:text-4xl font-bold font-heading text-center mb-6 md:mb-12">
-            Nasze produkty
-          </h2>
+      {/* Product Showcase Section */}
+      <section className="section bg-gradient-to-br from-slate-50 via-blue-50 to-slate-50 dark:from-neutral-900 dark:via-blue-950 dark:to-neutral-900">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading mb-4">
+              AI Smart Glasses Pro
+            </h2>
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+              Inteligentne okulary z kamerą 1200P, asystentem AI i otwartymi słuchawkami. Idealne do vlogowania i codziennego użytku.
+            </p>
+          </div>
           
-          {/* Mobile-first single column layout */}
-          <div className="space-y-4 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:space-y-0">
-            {/* Product 1 - Vision Pro */}
-            <div className="mobile-card md:card group touch-feedback">
-              <div className="relative h-48 md:h-64 bg-gradient-to-br from-gray-100 to-gray-200">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-3xl md:text-4xl mb-2">🥽</div>
-                    <span className="text-mobile-lg md:text-xl font-medium text-primary-600">Vision Pro</span>
+          <div className="max-w-5xl mx-auto">
+            <div className="card group overflow-hidden">
+              <div className="grid md:grid-cols-2 gap-8 p-8 md:p-12">
+                {/* Product Image */}
+                <div className="relative">
+                  <div className="aspect-square bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 dark:from-blue-900 dark:via-purple-900 dark:to-pink-900 rounded-2xl flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                    <div className="text-9xl">🥽</div>
+                  </div>
+                  <div className="absolute -top-4 -right-4 bg-blue-500 text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg">
+                    Bestseller
                   </div>
                 </div>
-                {/* Premium badge */}
-                <div className="absolute top-3 right-3 bg-accent-blue text-white px-2 py-1 rounded-full text-xs font-medium">
-                  Premium
-                </div>
-              </div>
-              <div className="p-4 md:p-6">
-                <h3 className="text-mobile-lg md:text-xl font-bold mb-2">Vision Pro</h3>
-                <p className="text-gray-600 text-mobile-sm md:text-base mb-4 line-clamp-2">
-                  Flagowy model z zaawansowanymi funkcjami rozszerzonej rzeczywistości i najwyższą jakością obrazu.
-                </p>
                 
-                {/* Mobile-optimized price and CTA */}
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                  <span className="text-mobile-lg md:text-lg font-bold text-primary">2499 zł</span>
+                {/* Product Details */}
+                <div className="flex flex-col justify-center">
+                  <h3 className="text-3xl md:text-4xl font-bold mb-4">AI Smart Glasses Pro</h3>
+                  <p className="text-gray-600 dark:text-gray-400 text-lg mb-6">
+                    Inteligentne okulary z kamerą HD 1200P, asystentem AI ChatGPT i Deep Seek, oraz otwartymi słuchawkami. Idealne do vlogowania, podróży i codziennego użytku bez użycia rąk.
+                  </p>
+                  
+                  {/* Features */}
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-center text-gray-700 dark:text-gray-300">
+                      <svg className="w-6 h-6 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Kamera HD 1200P z AI</span>
+                    </div>
+                    <div className="flex items-center text-gray-700 dark:text-gray-300">
+                      <svg className="w-6 h-6 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>ChatGPT i Deep Seek</span>
+                    </div>
+                    <div className="flex items-center text-gray-700 dark:text-gray-300">
+                      <svg className="w-6 h-6 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Otwarte słuchawki z ENC</span>
+                    </div>
+                    <div className="flex items-center text-gray-700 dark:text-gray-300">
+                      <svg className="w-6 h-6 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span>Bateria 7h + Bluetooth 5.4</span>
+                    </div>
+                  </div>
+                  
+                  {/* Price and CTA */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <div className="text-4xl font-bold text-blue-600">599 zł</div>
+                      <div className="text-sm text-gray-500">Darmowa dostawa</div>
+                    </div>
+                  </div>
+                  
                   <Link 
                     href="/products/vision-pro" 
-                    className="btn btn-primary w-full sm:w-auto text-mobile-sm md:text-base"
+                    className="btn btn-primary text-lg py-4 group"
                   >
-                    Zobacz więcej
+                    <span>Zobacz szczegóły</span>
+                    <svg className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
                   </Link>
                 </div>
               </div>
             </div>
-
-            {/* Product 2 - Tech View */}
-            <div className="mobile-card md:card group touch-feedback">
-              <div className="relative h-48 md:h-64 bg-gradient-to-br from-blue-100 to-blue-200">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-3xl md:text-4xl mb-2">👓</div>
-                    <span className="text-mobile-lg md:text-xl font-medium text-primary">Tech View</span>
-                  </div>
-                </div>
-                {/* Popular badge */}
-                <div className="absolute top-3 right-3 bg-success text-white px-2 py-1 rounded-full text-xs font-medium">
-                  Popularne
-                </div>
-              </div>
-              <div className="p-4 md:p-6">
-                <h3 className="text-mobile-lg md:text-xl font-bold mb-2">Tech View</h3>
-                <p className="text-gray-600 text-mobile-sm md:text-base mb-4 line-clamp-2">
-                  Idealny balans między funkcjonalnością a ceną. Doskonały dla codziennego użytku.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                  <span className="text-mobile-lg md:text-lg font-bold text-primary">1899 zł</span>
-                  <Link 
-                    href="/products/tech-view" 
-                    className="btn btn-primary w-full sm:w-auto text-mobile-sm md:text-base"
-                  >
-                    Zobacz więcej
-                  </Link>
-                </div>
-              </div>
-            </div>
-
-            {/* Product 3 - Lite */}
-            <div className="mobile-card md:card group touch-feedback md:col-span-2 lg:col-span-1">
-              <div className="relative h-48 md:h-64 bg-gradient-to-br from-green-100 to-green-200">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-3xl md:text-4xl mb-2">🕶️</div>
-                    <span className="text-mobile-lg md:text-xl font-medium text-primary">Lite</span>
-                  </div>
-                </div>
-                {/* Budget badge */}
-                <div className="absolute top-3 right-3 bg-warning text-white px-2 py-1 rounded-full text-xs font-medium">
-                  Najlepsza cena
-                </div>
-              </div>
-              <div className="p-4 md:p-6">
-                <h3 className="text-mobile-lg md:text-xl font-bold mb-2">Lite</h3>
-                <p className="text-gray-600 text-mobile-sm md:text-base mb-4 line-clamp-2">
-                  Lekki i przystępny cenowo model dla osób rozpoczynających przygodę z inteligentnymi okularami.
-                </p>
-                
-                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                  <span className="text-mobile-lg md:text-lg font-bold text-primary">1299 zł</span>
-                  <Link 
-                    href="/products/lite" 
-                    className="btn btn-primary w-full sm:w-auto text-mobile-sm md:text-base"
-                  >
-                    Zobacz więcej
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Mobile CTA to view all products */}
-          <div className="text-center mt-6 md:mt-8">
-            <Link 
-              href="/products" 
-              className="btn btn-outline w-full sm:w-auto"
-            >
-              Zobacz wszystkie produkty
-            </Link>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="section bg-white">
+      <section className="section bg-white dark:bg-neutral-900">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-bold font-heading text-center mb-12">
-            Dlaczego My Tech Glasses?
+          <h2 className="text-3xl md:text-4xl font-bold font-heading text-center mb-4">
+            Kluczowe funkcje
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Feature 1 */}
-            <div className="text-center">
-              <div className="bg-accent/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <p className="text-center text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto">
+            Odkryj zaawansowane możliwości AI Smart Glasses Pro
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Feature 1 - Camera */}
+            <div className="card p-8 text-center hover-lift group">
+              <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-3">Kamera HD 1200P</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Nagrywaj płynne wideo w rozdzielczości 1200P z technologią przeciwwstrząsową i HDR dla idealnych ujęć.
+              </p>
+            </div>
+
+            {/* Feature 2 - AI Assistant */}
+            <div className="card p-8 text-center hover-lift group">
+              <div className="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-2">Innowacyjna technologia</h3>
-              <p className="text-gray-600">
-                Najnowsze rozwiązania w dziedzinie rozszerzonej rzeczywistości i sztucznej inteligencji.
+              <h3 className="text-xl font-bold mb-3">ChatGPT & Deep Seek</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Zintegrowany asystent AI do odpowiedzi na pytania, tłumaczeń i identyfikacji obiektów w czasie rzeczywistym.
               </p>
             </div>
 
-            {/* Feature 2 */}
-            <div className="text-center">
-              <div className="bg-accent/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            {/* Feature 3 - Audio */}
+            <div className="card p-8 text-center hover-lift group">
+              <div className="bg-gradient-to-br from-pink-500 to-orange-600 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-2">Długi czas pracy</h3>
-              <p className="text-gray-600">
-                Do 12 godzin ciągłego działania na jednym ładowaniu, dzięki energooszczędnym komponentom.
+              <h3 className="text-xl font-bold mb-3">Otwarte słuchawki</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Wysokiej jakości dźwięk przestrzenny z podwójnymi mikrofonami ENC dla krystalicznie czystych rozmów.
               </p>
             </div>
 
-            {/* Feature 3 */}
-            <div className="text-center">
-              <div className="bg-accent/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            {/* Feature 4 - Voice Control */}
+            <div className="card p-8 text-center hover-lift group">
+              <div className="bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-2">Bezpieczeństwo danych</h3>
-              <p className="text-gray-600">
-                Zaawansowane szyfrowanie i pełna kontrola nad prywatnością twoich danych.
+              <h3 className="text-xl font-bold mb-3">Sterowanie głosowe</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Kontroluj wszystkie funkcje za pomocą komend głosowych - bez użycia rąk, idealne podczas jazdy czy wędrówki.
               </p>
             </div>
 
-            {/* Feature 4 */}
-            <div className="text-center">
-              <div className="bg-accent/10 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+            {/* Feature 5 - Battery */}
+            <div className="card p-8 text-center hover-lift group">
+              <div className="bg-gradient-to-br from-yellow-500 to-red-600 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold mb-2">Wsparcie 24/7</h3>
-              <p className="text-gray-600">
-                Całodobowa pomoc techniczna i regularne aktualizacje oprogramowania.
+              <h3 className="text-xl font-bold mb-3">Bateria 7 godzin</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Bateria 270 mAh zapewnia do 7 godzin odtwarzania muzyki lub 2 godziny nagrywania wideo.
+              </p>
+            </div>
+
+            {/* Feature 6 - Connectivity */}
+            <div className="card p-8 text-center hover-lift group">
+              <div className="bg-gradient-to-br from-indigo-500 to-blue-600 rounded-2xl w-20 h-20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold mb-3">Bluetooth 5.4 & Wi-Fi</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Automatyczna synchronizacja zdjęć i wideo przez Wi-Fi lub Bluetooth 5.4 z najnowszą technologią łączności.
               </p>
             </div>
           </div>
