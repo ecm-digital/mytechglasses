@@ -160,7 +160,17 @@ export async function GET(
     }
 
     // Get Stripe instance
-    const stripe = getStripeServer()
+    let stripe
+    try {
+      stripe = getStripeServer()
+    } catch (error) {
+      return createErrorResponse(
+        'Payment system not configured',
+        503,
+        'Stripe API keys are not properly configured',
+        'STRIPE_NOT_CONFIGURED'
+      )
+    }
 
     // Retrieve session from Stripe with expanded data
     let session

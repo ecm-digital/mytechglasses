@@ -1,4 +1,4 @@
-// File: /Users/tomaszgt/Mytechglasses/my-tech-glasses/src/app/api/create-checkout-session/route.ts
+// File: /Users/tomaszgt/Mytechglassesstore/mytechglasses/src/app/api/create-checkout-session/route.ts
 import * as entry from '../../../../../src/app/api/create-checkout-session/route.js'
 import type { NextRequest } from 'next/server.js'
 

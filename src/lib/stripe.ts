@@ -2,12 +2,12 @@ import { loadStripe, Stripe } from '@stripe/stripe-js'
 import StripeServer from 'stripe'
 
 // Environment validation
-const validateEnvironment = () => {
+const validateEnvironment = (requireServerKey = false) => {
   const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
   const secretKey = process.env.STRIPE_SECRET_KEY
 
-  if (typeof window === 'undefined') {
-    // Server-side validation
+  if (typeof window === 'undefined' && requireServerKey) {
+    // Server-side validation (only when actually needed)
     if (!secretKey) {
       throw new Error('STRIPE_SECRET_KEY is required but not set in environment variables')
     }
@@ -16,19 +16,21 @@ const validateEnvironment = () => {
     }
   }
 
-  // Client-side validation
-  if (!publishableKey) {
-    throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is required but not set in environment variables')
-  }
-  if (!publishableKey.startsWith('pk_')) {
-    throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY must start with "pk_"')
+  // Client-side validation (only validate if we're in browser)
+  if (typeof window !== 'undefined') {
+    if (!publishableKey) {
+      throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is required but not set in environment variables')
+    }
+    if (!publishableKey.startsWith('pk_')) {
+      throw new Error('NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY must start with "pk_"')
+    }
   }
 
   // Environment consistency check
-  const isTestMode = publishableKey.includes('test')
-  const isSecretTestMode = secretKey?.includes('test') ?? true
+  const isTestMode = publishableKey?.includes('test') ?? false
+  const isSecretTestMode = secretKey?.includes('test') ?? false
 
-  if (isTestMode !== isSecretTestMode) {
+  if (publishableKey && secretKey && isTestMode !== isSecretTestMode) {
     console.warn('Warning: Stripe keys environment mismatch (test vs live)')
   }
 
@@ -44,7 +46,10 @@ let stripePromise: Promise<Stripe | null>
 
 export const getStripe = (): Promise<Stripe | null> => {
   if (!stripePromise) {
-    const { publishableKey } = validateEnvironment()
+    const { publishableKey } = validateEnvironment(false)
+    if (!publishableKey) {
+      return Promise.resolve(null)
+    }
     stripePromise = loadStripe(publishableKey)
   }
   return stripePromise
@@ -55,7 +60,7 @@ let stripeServer: StripeServer | null = null
 
 export const getStripeServer = (): StripeServer => {
   if (!stripeServer) {
-    const { secretKey } = validateEnvironment()
+    const { secretKey } = validateEnvironment(true)
     
     if (!secretKey) {
       throw new Error('Cannot initialize server-side Stripe without STRIPE_SECRET_KEY')
@@ -72,7 +77,7 @@ export const getStripeServer = (): StripeServer => {
 
 // Configuration utilities
 export const getStripeConfig = () => {
-  const { publishableKey, secretKey, isTestMode } = validateEnvironment()
+  const { publishableKey, secretKey, isTestMode } = validateEnvironment(false)
   
   return {
     publishableKey,

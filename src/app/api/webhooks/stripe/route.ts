@@ -1,13 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-06-30.basil',
-})
+// Lazy initialization of Stripe to avoid build-time errors
+let stripe: Stripe | null = null
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
+function getStripe() {
+  if (!stripe) {
+    const secretKey = process.env.STRIPE_SECRET_KEY
+    if (!secretKey) {
+      throw new Error('STRIPE_SECRET_KEY is not configured')
+    }
+    stripe = new Stripe(secretKey, {
+      apiVersion: '2025-06-30.basil',
+    })
+  }
+  return stripe
+}
 
 export async function POST(request: NextRequest) {
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
+  
+  if (!webhookSecret) {
+    console.error('STRIPE_WEBHOOK_SECRET is not configured')
+    return NextResponse.json({ error: 'Webhook not configured' }, { status: 500 })
+  }
+
   const body = await request.text()
   const signature = request.headers.get('stripe-signature')
 
@@ -15,10 +32,18 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'No signature' }, { status: 400 })
   }
 
+  let stripeClient: Stripe
+  try {
+    stripeClient = getStripe()
+  } catch (error) {
+    console.error('Stripe initialization failed:', error)
+    return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 })
+  }
+
   let event: Stripe.Event
 
   try {
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
+    event = stripeClient.webhooks.constructEvent(body, signature, webhookSecret)
   } catch (error) {
     console.error('Webhook signature verification failed:', error)
     return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })

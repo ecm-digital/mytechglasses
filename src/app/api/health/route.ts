@@ -19,7 +19,14 @@ export async function GET() {
     
     try {
       const stripeStart = performance.now()
-      const stripe = getStripeServer()
+      
+      // Try to get Stripe instance
+      let stripe
+      try {
+        stripe = getStripeServer()
+      } catch (configError) {
+        throw new Error('Stripe not configured: ' + (configError instanceof Error ? configError.message : 'Unknown error'))
+      }
       
       // Simple test - retrieve account info with timeout
       const timeoutPromise = new Promise((_, reject) => 

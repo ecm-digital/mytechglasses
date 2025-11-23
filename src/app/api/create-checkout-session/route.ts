@@ -232,7 +232,17 @@ export async function POST(request: NextRequest) {
     const orderId = generateOrderId()
 
     // Get Stripe instance
-    const stripe = getStripeServer()
+    let stripe
+    try {
+      stripe = getStripeServer()
+    } catch (error) {
+      return createErrorResponse(
+        'Payment system not configured',
+        503,
+        'Stripe API keys are not properly configured',
+        'STRIPE_NOT_CONFIGURED'
+      )
+    }
 
     // Build comprehensive metadata
     const metadata = {

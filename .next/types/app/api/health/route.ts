@@ -1,4 +1,4 @@
-// File: /Users/tomaszgt/Mytechglasses/my-tech-glasses/src/app/api/health/route.ts
+// File: /Users/tomaszgt/Mytechglassesstore/mytechglasses/src/app/api/health/route.ts
 import * as entry from '../../../../../src/app/api/health/route.js'
 import type { NextRequest } from 'next/server.js'
 
