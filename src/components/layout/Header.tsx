@@ -4,10 +4,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ShoppingCartIcon, Bars3Icon, XMarkIcon, SparklesIcon } from '@heroicons/react/24/outline'
 import { useCart } from '@/hooks/useCart'
+import CartDrawer from '@/components/cart/CartDrawer'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isCartOpen, setIsCartOpen] = useState(false)
   const { getItemCount } = useCart()
   const cartItemsCount = getItemCount()
 
@@ -16,7 +18,7 @@ const Header = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
     }
-    
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
@@ -31,11 +33,13 @@ const Header = () => {
 
   return (
     <>
+      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+
       {/* Modern Glassmorphism Header */}
       <header className={`
         fixed top-0 left-0 right-0 z-50 transition-all duration-500 safe-top
-        ${isScrolled 
-          ? 'glass backdrop-blur-xl bg-white/80 dark:bg-neutral-900/80 shadow-floating' 
+        ${isScrolled
+          ? 'glass backdrop-blur-xl bg-white/80 dark:bg-neutral-900/80 shadow-floating'
           : 'bg-transparent'
         }
       `}>
@@ -48,8 +52,8 @@ const Header = () => {
                 md:hidden relative group
                 w-12 h-12 rounded-xl flex items-center justify-center
                 menu-button-enhanced ripple-effect
-                ${isScrolled 
-                  ? 'bg-white/20 hover:bg-white/30 text-neutral-700 dark:text-neutral-300' 
+                ${isScrolled
+                  ? 'bg-white/20 hover:bg-white/30 text-neutral-700 dark:text-neutral-300'
                   : 'bg-white/10 hover:bg-white/20 text-white'
                 }
               `}
@@ -77,8 +81,8 @@ const Header = () => {
                 <div className="relative">
                   <SparklesIcon className={`
                     w-8 h-8 transition-all duration-300
-                    ${isScrolled 
-                      ? 'text-primary-500' 
+                    ${isScrolled
+                      ? 'text-primary-500'
                       : 'text-white'
                     }
                   `} />
@@ -86,8 +90,8 @@ const Header = () => {
                 </div>
                 <span className={`
                   font-heading font-bold text-xl md:text-2xl transition-all duration-300
-                  ${isScrolled 
-                    ? 'gradient-text' 
+                  ${isScrolled
+                    ? 'gradient-text'
                     : 'text-white'
                   }
                 `}>
@@ -122,14 +126,14 @@ const Header = () => {
 
             {/* Modern Action Buttons */}
             <div className="flex items-center space-x-2">
-              {/* Cart Button with Modern Badge */}
-              <Link 
-                href="/cart" 
+              {/* Cart Button with Modern Badge - Opens Drawer */}
+              <button
+                onClick={() => setIsCartOpen(true)}
                 className={`
                   relative group w-12 h-12 rounded-xl flex items-center justify-center
                   menu-button-enhanced ripple-effect
-                  ${isScrolled 
-                    ? 'bg-white/20 hover:bg-white/30 text-neutral-700 dark:text-neutral-300' 
+                  ${isScrolled
+                    ? 'bg-white/20 hover:bg-white/30 text-neutral-700 dark:text-neutral-300'
                     : 'bg-white/10 hover:bg-white/20 text-white'
                   }
                 `}
@@ -142,16 +146,16 @@ const Header = () => {
                   </span>
                 )}
                 <div className="absolute inset-0 rounded-xl bg-primary-500 opacity-0 group-hover:opacity-20 transition-opacity" />
-              </Link>
+              </button>
 
               {/* Desktop User Button */}
-              <Link 
-                href="/account" 
+              <Link
+                href="/account"
                 className={`
                   hidden md:flex relative group w-12 h-12 rounded-xl items-center justify-center
                   menu-button-enhanced ripple-effect
-                  ${isScrolled 
-                    ? 'bg-white/20 hover:bg-white/30 text-neutral-700 dark:text-neutral-300' 
+                  ${isScrolled
+                    ? 'bg-white/20 hover:bg-white/30 text-neutral-700 dark:text-neutral-300'
                     : 'bg-white/10 hover:bg-white/20 text-white'
                   }
                 `}
@@ -167,7 +171,7 @@ const Header = () => {
       </header>
 
       {/* Modern Mobile Menu with Glassmorphism */}
-      <div 
+      <div
         className={`
           fixed inset-0 z-40 md:hidden transition-all duration-500 ease-out
           ${isMenuOpen ? 'visible opacity-100' : 'invisible opacity-0'}
@@ -220,7 +224,7 @@ const Header = () => {
                 <span className="menu-item-text">{item.label}</span>
               </Link>
             ))}
-            
+
             <div className="border-t border-white/20 mt-8 pt-6">
               <Link
                 href="/account"
@@ -230,10 +234,12 @@ const Header = () => {
                 <span className="text-2xl mr-4 flex-shrink-0">👤</span>
                 <span className="menu-item-text">Moje konto</span>
               </Link>
-              <Link
-                href="/cart"
-                className="mobile-nav-item"
-                onClick={closeMenu}
+              <button
+                onClick={() => {
+                  closeMenu()
+                  setIsCartOpen(true)
+                }}
+                className="mobile-nav-item w-full text-left"
               >
                 <span className="text-2xl mr-4 flex-shrink-0">🛒</span>
                 <span className="menu-item-text flex-1">Koszyk</span>
@@ -242,7 +248,7 @@ const Header = () => {
                     {cartItemsCount}
                   </span>
                 )}
-              </Link>
+              </button>
             </div>
           </nav>
 
@@ -256,7 +262,7 @@ const Header = () => {
         </div>
 
         {/* Backdrop */}
-        <div 
+        <div
           className={`
             absolute inset-0 menu-backdrop-enhanced
             transition-opacity duration-500
