@@ -92,6 +92,14 @@ describe('Cart Item Validation', () => {
     expect(result.isValid).toBe(false)
     expect(result.errors).toContain('Item price seems unreasonably high')
   })
+
+  test('should reject item with non-integer quantity', () => {
+    const invalidItem = { ...mockCartItem, quantity: 1.5 }
+    const result = validateCartItem(invalidItem)
+
+    expect(result.isValid).toBe(false)
+    expect(result.errors).toContain('Item quantity must be an integer')
+  })
 })
 
 describe('Cart Validation', () => {
