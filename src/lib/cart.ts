@@ -115,6 +115,8 @@ export const validateCartItem = (item: Partial<CartItem>): { isValid: boolean; e
 
   if (!item.quantity || typeof item.quantity !== 'number' || item.quantity <= 0) {
     errors.push('Item quantity is required and must be a positive number')
+  } else if (!Number.isInteger(item.quantity)) {
+    errors.push('Item quantity must be an integer')
   }
 
   // Business rules

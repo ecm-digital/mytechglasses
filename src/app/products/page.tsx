@@ -54,7 +54,7 @@ export default function Products() {
       price: 599,
       badge: 'Bestseller',
       badgeColor: 'bg-blue-500',
-      emoji: '🥽',
+      imageUrl: 'https://placehold.co/600x400/png',
       gradient: 'from-blue-100 via-purple-100 to-pink-100',
       features: [
         'Kamera HD 1200P z technologią AI (800W)',
@@ -95,8 +95,8 @@ export default function Products() {
                 {/* Product Image */}
                 <div className={`relative bg-gradient-to-br ${product.gradient} p-12 md:p-16 flex items-center justify-center`}>
                   <div className="text-center">
-                    <div className="text-9xl md:text-[12rem] mb-4 animate-float">{product.emoji}</div>
-                    <div className={`inline-block ${product.badgeColor} text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg`}>
+                    <img src={product.imageUrl} alt={product.name} className="max-w-full h-auto rounded-lg shadow-lg" />
+                    <div className={`inline-block ${product.badgeColor} text-white px-6 py-3 rounded-full text-sm font-bold shadow-lg mt-4`}>
                       {product.badge}
                     </div>
                   </div>
