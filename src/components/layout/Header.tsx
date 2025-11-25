@@ -39,7 +39,7 @@ const Header = () => {
       <header className={`
         fixed top-0 left-0 right-0 z-50 transition-all duration-500 safe-top
         ${isScrolled
-          ? 'glass backdrop-blur-xl bg-white/80 dark:bg-neutral-900/80 shadow-floating'
+          ? 'glass backdrop-blur-xl bg-white/70 dark:bg-neutral-900/70 shadow-floating border-b border-white/20 dark:border-white/10'
           : 'bg-transparent'
         }
       `}>
@@ -184,7 +184,7 @@ const Header = () => {
         {/* Menu Panel */}
         <div className={`
           absolute left-0 top-0 h-full w-80 max-w-[85vw]
-          glass-dark-enhanced
+          glass-dark-enhanced backdrop-blur-xl bg-neutral-900/70 border-r border-white/10
           transform transition-transform duration-500 ease-out
           ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'}
         `}>
